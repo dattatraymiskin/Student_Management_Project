@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+           <div class="container">
+              <div id="loaddata" > <h2>This will change</h2></div>
+               <button class="btn btn-success" id="btnclick" >click on it</button>
+           
+           </div> 
+        
+          <div class="container">
+              <div id="server" > <h2>Get from server</h2></div>
+               <button class="btn btn-success" onclick="myFun()" >get from server</button>
+           
+           </div> 
+            <div class="container">
+              <div id="changehere" > <h2>Get Post</h2></div>
+               <button class="btn btn-success btnclick" >GET</button>
+           
+           </div> 
+           <script type="text/javascript">
+             $(document).ready(function(){
+            	 $('#btnclick').click(function(){
+            		 $('#loaddata').load("/students",function(){
+            			  alert("this is done");
+            		 });
+            	 });
+             });
+           
+            function myFun(){
+            	var req=new XMLHttpRequest();
+            	req.open('GET','/students',true);
+            	req.send();
+            	
+            	req.onreadystatechange =function (){
+            		if(req.readyState == 4 && req.status == 200){
+            			document.getElementById('server').innerHTML = req.responseText;
+            		}
+            	}
+            }
+            
+            $(document).ready(function(){
+            	$('.btnclick').click(function(){
+            		
+            		$.get('/students',function(data,status){
+            				$('#changehere').html(data);
+            				alert(status);
+            		});
+            	});
+            });
+            
+           </script>
+</body>
+</html>
